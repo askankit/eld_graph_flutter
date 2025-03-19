@@ -15,8 +15,8 @@ class EldModel {
 
   factory EldModel.fromJson(Map<String, dynamic> json) {
     return EldModel(
-      startTime: DateTime.parse(json['startTime']),
-      endTime: DateTime.parse(json['endTime']),
+      startTime: DateTime.parse(json['startTime']??DateTime.now().toIso8601String()),
+      endTime: DateTime.parse(json['endTime']??DateTime.now().toIso8601String()),
       eventType:json['eventType']
     );
   }
