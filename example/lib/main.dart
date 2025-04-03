@@ -69,7 +69,7 @@ List<EldModel> eldLogList =[];
       appBar: AppBar(title: Text("Flutter ELD Graph Demo")),
       body: Center(child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 60.0),
-        child: ELdGraph(dataPoints: eldLogList, logsDate: DateTime.now()),
+        child: ELdGraph(dataPoints: eldLogList, logsDate: DateTime.now(),),
       )),
 
     );
