@@ -28,6 +28,7 @@ class _ELdGraphState extends State<ELdGraph> {
   String onDutyTime = "00:00";
   String driveTime = "00:00";
   String sleepTime = "00:00";
+
   @override
   void initState() {
    final dutyDuration = calculateDutyDurations();
