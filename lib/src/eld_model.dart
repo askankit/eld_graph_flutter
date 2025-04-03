@@ -1,15 +1,15 @@
 class EldModel {
   final DateTime ?startTime;
   final DateTime ?endTime;
-  final int ?eventType;
+  final int ?dutyType;
 
-  EldModel({required this.startTime, required this.endTime,this.eventType});
+  EldModel({required this.startTime, required this.endTime,this.dutyType});
 
   Map<String, dynamic> toJson() {
     return {
       'startTime': startTime?.toIso8601String(),
       'endTime': endTime?.toIso8601String(),
-      'eventType': eventType
+      'dutyType': dutyType
     };
   }
 
@@ -17,10 +17,10 @@ class EldModel {
     return EldModel(
       startTime: DateTime.parse(json['startTime']??DateTime.now().toIso8601String()),
       endTime: DateTime.parse(json['endTime']??DateTime.now().toIso8601String()),
-      eventType:json['eventType']
+        dutyType:json['dutyType']
     );
   }
 
   @override
-  String toString() => 'Start: $startTime, End: $endTime, eventType:$eventType';
+  String toString() => 'Start: $startTime, End: $endTime, eventType:$dutyType';
 }

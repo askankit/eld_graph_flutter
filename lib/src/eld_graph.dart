@@ -28,8 +28,17 @@ class _ELdGraphState extends State<ELdGraph> {
   String onDutyTime = "00:00";
   String driveTime = "00:00";
   String sleepTime = "00:00";
+  @override
+  void initState() {
+   final dutyDuration = calculateDutyDurations();
+    offTime = dutyDuration[1] ?? "00:00";
+    onDutyTime = dutyDuration[4] ?? "00:00";
+    driveTime =dutyDuration[3] ?? "00:00";
+    sleepTime =dutyDuration[2] ?? "00:00";
+    super.initState();
+  }
 
-  Future<Map<int, String>> calculateDutyDurations() async {
+  Map<int, String> calculateDutyDurations() {
     Map<int, Duration> dutyDurations = {
       1: Duration.zero, // Off Duty
       2: Duration.zero, // Sleeper Berth
@@ -40,9 +49,8 @@ class _ELdGraphState extends State<ELdGraph> {
     for (final log in widget.dataPoints) {
       DateTime start = log.startTime ?? _timeNow;
       DateTime end = log.endTime ?? _timeNow;
-      dutyDurations[log.eventType!] = dutyDurations[log.eventType]! + end.difference(start);
+      dutyDurations[log.dutyType!] = dutyDurations[log.dutyType]! + end.difference(start);
     }
-
     return dutyDurations.map(
       (status, duration) => MapEntry(status, _formatDuration(duration)),
     );
@@ -68,10 +76,7 @@ class _ELdGraphState extends State<ELdGraph> {
             tickColor: widget.axisColor ?? Colors.grey,
             graphLineColor: widget.graphLineColor ?? Colors.black,
             labelTextStyle:
-                widget.labelTextStyle ??
-                 TextStyle(
-                  fontSize: 14,
-                  color: widget.axisColor ?? Colors.grey,
+                widget.labelTextStyle ?? TextStyle(fontSize: 14, color: widget.axisColor ?? Colors.black,
                   fontWeight: FontWeight.w700,
                 ),
           ),
@@ -176,14 +181,13 @@ class StepLineGraphPainter extends CustomPainter {
     };
     for (int i = 0; i < dataPoints.length; i++) {
       final log = dataPoints[i];
-      // Convert times to X-axis positions
       double startX = (timeToX(EldUtils.extractTime(log.startTime), size.width));
       double endX = (timeToX(EldUtils.extractTime(log.endTime),  size.width));
-      double y = yPositions[log.eventType??1]!;
+      double y = yPositions[log.dutyType??1]!;
       path.moveTo(startX, y);
       path.lineTo(endX, y);
       if (i < dataPoints.length - 1) {
-        double nextY = yPositions[dataPoints[i + 1].eventType??1]!;
+        double nextY = yPositions[dataPoints[i + 1].dutyType??1]!;
         path.lineTo(endX, nextY);
       }
     }
