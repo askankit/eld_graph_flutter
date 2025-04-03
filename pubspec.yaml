@@ -1,7 +1,7 @@
 name: eld_graph_flutter
 description: "implement ELD graph within your flutter app"
-version: 1.0.0
-homepage: "https://www.codemicros.com/"
+version: 1.0.1
+homepage: "https://github.com/askankit/eld_graph_flutter"
 
 environment:
   sdk: ^3.7.0
