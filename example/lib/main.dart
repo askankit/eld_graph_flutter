@@ -66,6 +66,7 @@ List<EldModel> eldLogList =[];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text("Flutter ELD Graph Demo")),
       body: Center(child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 60.0),
         child: ELdGraph(dataPoints: eldLogList, logsDate: DateTime.now()),
