@@ -1,5 +1,4 @@
 class EldUtils {
-
   /// formatTo24Hour is used to format the time to 24 hour format.
   static String formatTo24Hour(DateTime? dateTime) {
     final DateTime time = dateTime ?? DateTime.now();

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'eld_model.dart';
 
 class ELdGraph extends StatefulWidget {
-
   /// dataPoints is the list of EldModel objects. It is used to draw the graph.
   final List<EldModel> dataPoints;
 
@@ -69,7 +68,7 @@ class _ELdGraphState extends State<ELdGraph> {
     );
   }
 
-   /// _formatDuration is used to format the duration in hours and minutes.
+  /// _formatDuration is used to format the duration in hours and minutes.
   String _formatDuration(Duration duration) {
     int hours = duration.inHours;
     int minutes = duration.inMinutes.remainder(60);
@@ -107,6 +106,7 @@ class _ELdGraphState extends State<ELdGraph> {
     );
   }
 }
+
 /// [StepLineGraphPainter] is painter widget to draw the graph.
 class StepLineGraphPainter extends CustomPainter {
   ///
@@ -218,7 +218,8 @@ class StepLineGraphPainter extends CustomPainter {
       }
     }
   }
-/// drawStepGraph is used to draw the graph line.
+
+  /// drawStepGraph is used to draw the graph line.
   void _drawStepGraph(
     Canvas canvas,
     Size size,
