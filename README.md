@@ -10,7 +10,7 @@
 - **Optimized for Performance**: Efficient rendering even for large and complex graphs.
 
 
-## UI View
+## UI Example
 
 ![Screenshot](screenshot.png)
 
