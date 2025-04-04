@@ -9,6 +9,11 @@
 - **Interactive**: Includes touch and drag interactions for easy navigation and manipulation.
 - **Optimized for Performance**: Efficient rendering even for large and complex graphs.
 
+
+## UI View
+
+![Screenshot](screenshot.png)
+
 ## Installation
 
 To install the `flutter_eld_graph` package, add the following dependency to your `pubspec.yaml` file:
