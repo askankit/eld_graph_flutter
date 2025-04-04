@@ -16,16 +16,16 @@ To install the `flutter_eld_graph` package, add the following dependency to your
 ```yaml
 dependencies:
   flutter_eld_graph: ^<latest_version>
-
+```
 ## Graph Widget
 
-These are the following atributes of the `GraphWidget` class::
+These are the following attributes of the `GraphWidget` class::
 
-- [dataPoints] - data points is the list of start time ,end time and duty type.
-- [logsDate] - Date to show on the graph.
-- [axisColor] - axisColor is the color of the axis.
-- [labelTextStyle] - labelTextStyle is the text style of the labels.
-- [graphLineColor] - graphLineColor is the color of the graph line.
+- `dataPoints` - data points is the list of start time ,end time and duty type.
+- `[logsDate]` - Date to show on the graph.
+- `[axisColor]` - axisColor is the color of the axis.
+- `[labelTextStyle]` - labelTextStyle is the text style of the labels.
+- `[graphLineColor]` - graphLineColor is the color of the graph line.
 
 ## Graph Widget
 
@@ -42,7 +42,7 @@ These are the following atributes of the `GraphWidget` class::
 
     );
   }
-
+```
 
 
 

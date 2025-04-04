@@ -31,11 +31,11 @@ class _ELdGraphState extends State<ELdGraph> {
 
   @override
   void initState() {
-   final dutyDuration = calculateDutyDurations();
+    final dutyDuration = calculateDutyDurations();
     offTime = dutyDuration[1] ?? "00:00";
     onDutyTime = dutyDuration[4] ?? "00:00";
-    driveTime =dutyDuration[3] ?? "00:00";
-    sleepTime =dutyDuration[2] ?? "00:00";
+    driveTime = dutyDuration[3] ?? "00:00";
+    sleepTime = dutyDuration[2] ?? "00:00";
     super.initState();
   }
 
@@ -50,7 +50,8 @@ class _ELdGraphState extends State<ELdGraph> {
     for (final log in widget.dataPoints) {
       DateTime start = log.startTime ?? _timeNow;
       DateTime end = log.endTime ?? _timeNow;
-      dutyDurations[log.dutyType!] = dutyDurations[log.dutyType]! + end.difference(start);
+      dutyDurations[log.dutyType!] =
+          dutyDurations[log.dutyType]! + end.difference(start);
     }
     return dutyDurations.map(
       (status, duration) => MapEntry(status, _formatDuration(duration)),
@@ -72,12 +73,20 @@ class _ELdGraphState extends State<ELdGraph> {
         child: CustomPaint(
           painter: StepLineGraphPainter(
             dataPoints: widget.dataPoints,
-            rightSideLabels: [(offTime), (sleepTime), (driveTime), (onDutyTime)],
+            rightSideLabels: [
+              (offTime),
+              (sleepTime),
+              (driveTime),
+              (onDutyTime),
+            ],
             axisColor: widget.axisColor ?? Colors.grey,
             tickColor: widget.axisColor ?? Colors.grey,
             graphLineColor: widget.graphLineColor ?? Colors.black,
             labelTextStyle:
-                widget.labelTextStyle ?? TextStyle(fontSize: 14, color: widget.axisColor ?? Colors.black,
+                widget.labelTextStyle ??
+                TextStyle(
+                  fontSize: 14,
+                  color: widget.axisColor ?? Colors.black,
                   fontWeight: FontWeight.w700,
                 ),
           ),
@@ -106,19 +115,21 @@ class StepLineGraphPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    final Paint axisPaint =
+        Paint()
+          ..color = axisColor
+          ..strokeWidth = 0.5;
 
-    final Paint axisPaint = Paint()
-      ..color = axisColor
-      ..strokeWidth = 0.5;
+    final Paint tickPaint =
+        Paint()
+          ..color = tickColor
+          ..strokeWidth = 0.5;
 
-    final Paint tickPaint = Paint()
-      ..color = tickColor
-      ..strokeWidth = 0.5;
-
-    final Paint linePaint = Paint()
-      ..color = graphLineColor
-      ..strokeWidth = 2
-      ..style = PaintingStyle.stroke;
+    final Paint linePaint =
+        Paint()
+          ..color = graphLineColor
+          ..strokeWidth = 2
+          ..style = PaintingStyle.stroke;
 
     final double xStep = size.width / 24;
     final double yStep = size.height / 4;
@@ -129,24 +140,45 @@ class StepLineGraphPainter extends CustomPainter {
     _drawStepGraph(canvas, size, xStep, yStep, linePaint);
     _drawAxisLabels(canvas, size, xStep, yStep);
   }
+
   // Draw grid lines
-  void _drawGridLines(Canvas canvas, Size size, double xStep, double yStep, Paint axisPaint) {
+  void _drawGridLines(
+    Canvas canvas,
+    Size size,
+    double xStep,
+    double yStep,
+    Paint axisPaint,
+  ) {
     for (int i = 0; i <= 24; i++) {
-      canvas.drawLine(Offset(xStep * i, 0), Offset(xStep * i, size.height), axisPaint);
+      canvas.drawLine(
+        Offset(xStep * i, 0),
+        Offset(xStep * i, size.height),
+        axisPaint,
+      );
     }
     for (int i = 0; i <= 4; i++) {
-      canvas.drawLine(Offset(0, yStep * i), Offset(size.width, yStep * i), axisPaint);
+      canvas.drawLine(
+        Offset(0, yStep * i),
+        Offset(size.width, yStep * i),
+        axisPaint,
+      );
     }
   }
 
   // Draw ticks
-  void _drawTicks(Canvas canvas, Size size, double xStep, double yStep, Paint tickPaint) {
+  void _drawTicks(
+    Canvas canvas,
+    Size size,
+    double xStep,
+    double yStep,
+    Paint tickPaint,
+  ) {
     // Draw small ruler ticks on the X-axis
     for (int i = 0; i < 24; i++) {
       double x = xStep * i;
       for (int j = 1; j <= 3; j++) {
         double tickX = x + (xStep / 4) * j;
-        double tickHeight = (j == 2) ? 20 : 10;  // Bigger size for the 2nd tick
+        double tickHeight = (j == 2) ? 20 : 10; // Bigger size for the 2nd tick
 
         // Draw ticks at multiple Y-levels
         for (int k = 0; k < 4; k++) {
@@ -165,12 +197,22 @@ class StepLineGraphPainter extends CustomPainter {
       double y = yStep * i;
       for (int j = 1; j < 3; j++) {
         double tickY = y + (yStep / 2) * j;
-        canvas.drawLine(Offset(size.width - 10, tickY), Offset(size.width, tickY), tickPaint);
+        canvas.drawLine(
+          Offset(size.width - 10, tickY),
+          Offset(size.width, tickY),
+          tickPaint,
+        );
       }
     }
   }
 
-  void _drawStepGraph(Canvas canvas, Size size, double xStep, double yStep, Paint linePaint) {
+  void _drawStepGraph(
+    Canvas canvas,
+    Size size,
+    double xStep,
+    double yStep,
+    Paint linePaint,
+  ) {
     final path = Path();
 
     // Define Y positions for step alignment
@@ -182,13 +224,16 @@ class StepLineGraphPainter extends CustomPainter {
     };
     for (int i = 0; i < dataPoints.length; i++) {
       final log = dataPoints[i];
-      double startX = (timeToX(EldUtils.extractTime(log.startTime), size.width));
-      double endX = (timeToX(EldUtils.extractTime(log.endTime),  size.width));
-      double y = yPositions[log.dutyType??1]!;
+      double startX = (timeToX(
+        EldUtils.extractTime(log.startTime),
+        size.width,
+      ));
+      double endX = (timeToX(EldUtils.extractTime(log.endTime), size.width));
+      double y = yPositions[log.dutyType ?? 1]!;
       path.moveTo(startX, y);
       path.lineTo(endX, y);
       if (i < dataPoints.length - 1) {
-        double nextY = yPositions[dataPoints[i + 1].dutyType??1]!;
+        double nextY = yPositions[dataPoints[i + 1].dutyType ?? 1]!;
         path.lineTo(endX, nextY);
       }
     }
@@ -198,12 +243,12 @@ class StepLineGraphPainter extends CustomPainter {
   double timeToX(String time, double width) {
     List<String> parts = time.split(':');
     double hours = double.parse(parts[0]) + (double.parse(parts[1]) / 60);
-    return (hours / 24) * width;  // Normalize to 24-hour scale
+    return (hours / 24) * width; // Normalize to 24-hour scale
   }
 
   // Draw axis labels
   void _drawAxisLabels(Canvas canvas, Size size, double xStep, double yStep) {
-    final textStyle =labelTextStyle;
+    final textStyle = labelTextStyle;
     final textPainter = TextPainter(
       textAlign: TextAlign.center,
       textDirection: TextDirection.ltr,
@@ -215,17 +260,30 @@ class StepLineGraphPainter extends CustomPainter {
   }
 
   // Draw X-axis labels
-  void _drawXAxisLabels(Canvas canvas, double xStep, TextPainter textPainter, TextStyle textStyle) {
+  void _drawXAxisLabels(
+    Canvas canvas,
+    double xStep,
+    TextPainter textPainter,
+    TextStyle textStyle,
+  ) {
     for (int i = 0; i <= 24; i++) {
       String text = i == 0 ? 'M' : '$i'; // Replace 0 with 'M'
       textPainter.text = TextSpan(text: text, style: textStyle);
       textPainter.layout();
-      textPainter.paint(canvas, Offset(xStep * i - 10, -30)); // Position at the top
+      textPainter.paint(
+        canvas,
+        Offset(xStep * i - 10, -30),
+      ); // Position at the top
     }
   }
 
   // Draw Y-axis labels
-  void _drawYAxisLabels(Canvas canvas, double yStep, TextPainter textPainter, TextStyle textStyle) {
+  void _drawYAxisLabels(
+    Canvas canvas,
+    double yStep,
+    TextPainter textPainter,
+    TextStyle textStyle,
+  ) {
     List<String> yLabels = ["OFF", "SB", "D", "ON"];
     for (int i = 0; i < yLabels.length; i++) {
       final String label = yLabels[i];
@@ -237,14 +295,23 @@ class StepLineGraphPainter extends CustomPainter {
   }
 
   // Draw right side labels
-  void _drawRightSideLabels(Canvas canvas, double yStep, TextPainter textPainter, TextStyle textStyle, Size size) {
+  void _drawRightSideLabels(
+    Canvas canvas,
+    double yStep,
+    TextPainter textPainter,
+    TextStyle textStyle,
+    Size size,
+  ) {
     List<String> rightSideLabels = this.rightSideLabels;
     for (int i = 0; i < rightSideLabels.length; i++) {
       final String label = rightSideLabels[i];
       textPainter.text = TextSpan(text: label, style: textStyle);
       textPainter.layout();
       double yPosition = yStep * i + (yStep - textPainter.height) / 2;
-      textPainter.paint(canvas, Offset(size.width + 10, yPosition)); // Add 10px padding on the right
+      textPainter.paint(
+        canvas,
+        Offset(size.width + 10, yPosition),
+      ); // Add 10px padding on the right
     }
   }
 

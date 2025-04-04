@@ -1,23 +1,27 @@
 class EldModel {
-  final DateTime ?startTime;
-  final DateTime ?endTime;
-  final int ?dutyType;
+  final DateTime? startTime;
+  final DateTime? endTime;
+  final int? dutyType;
 
-  EldModel({required this.startTime, required this.endTime,this.dutyType});
+  EldModel({required this.startTime, required this.endTime, this.dutyType});
 
   Map<String, dynamic> toJson() {
     return {
       'startTime': startTime?.toIso8601String(),
       'endTime': endTime?.toIso8601String(),
-      'dutyType': dutyType
+      'dutyType': dutyType,
     };
   }
 
   factory EldModel.fromJson(Map<String, dynamic> json) {
     return EldModel(
-      startTime: DateTime.parse(json['startTime']??DateTime.now().toIso8601String()),
-      endTime: DateTime.parse(json['endTime']??DateTime.now().toIso8601String()),
-        dutyType:json['dutyType']
+      startTime: DateTime.parse(
+        json['startTime'] ?? DateTime.now().toIso8601String(),
+      ),
+      endTime: DateTime.parse(
+        json['endTime'] ?? DateTime.now().toIso8601String(),
+      ),
+      dutyType: json['dutyType'],
     );
   }
 

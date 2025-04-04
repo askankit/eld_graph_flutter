@@ -1,7 +1,10 @@
 name: eld_graph_flutter
-description: "implement ELD graph within your flutter app"
+description: "A Flutter package to visualize ELD (Electronic Logging Device) graphs with customizable styles and support for duty status data tracking."
 version: 1.0.1
 homepage: "https://github.com/askankit/eld_graph_flutter"
+repository: "https://github.com/askankit/eld_graph_flutter"
+maintainer: Ankit Bisht (@askAnkit)
+
 
 environment:
   sdk: ^3.7.0
