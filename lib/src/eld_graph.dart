@@ -3,10 +3,20 @@ import 'package:flutter/material.dart';
 import 'eld_model.dart';
 
 class ELdGraph extends StatefulWidget {
+
+  /// dataPoints is the list of EldModel objects. It is used to draw the graph.
   final List<EldModel> dataPoints;
+
+  /// logsDate is the date of the logs. It is used to display the date on the graph.
   final DateTime logsDate;
+
+  /// axisColor is the color of the axis.
   final Color? axisColor;
+
+  /// graphLineColor is the color of the graph line.
   final Color? graphLineColor;
+
+  /// labelTextStyle is the style of the labels.
   final TextStyle? labelTextStyle;
 
   ELdGraph({
@@ -16,7 +26,7 @@ class ELdGraph extends StatefulWidget {
     this.axisColor,
     this.graphLineColor,
     this.labelTextStyle,
-  }) : assert(dataPoints.isNotEmpty, "Data points cannot be empty");
+  }) : assert(dataPoints.isEmpty, "Data points cannot be empty");
 
   @override
   State<ELdGraph> createState() => _ELdGraphState();
@@ -39,6 +49,7 @@ class _ELdGraphState extends State<ELdGraph> {
     super.initState();
   }
 
+  /// calculateDutyDurations is used to calculate the duration of each duty type.
   Map<int, String> calculateDutyDurations() {
     Map<int, Duration> dutyDurations = {
       1: Duration.zero, // Off Duty
@@ -58,6 +69,7 @@ class _ELdGraphState extends State<ELdGraph> {
     );
   }
 
+   /// _formatDuration is used to format the duration in hours and minutes.
   String _formatDuration(Duration duration) {
     int hours = duration.inHours;
     int minutes = duration.inMinutes.remainder(60);
@@ -95,8 +107,9 @@ class _ELdGraphState extends State<ELdGraph> {
     );
   }
 }
-
+/// [StepLineGraphPainter] is painter widget to draw the graph.
 class StepLineGraphPainter extends CustomPainter {
+  ///
   final List<EldModel> dataPoints;
   final List<String> rightSideLabels;
   final Color axisColor;
@@ -134,14 +147,14 @@ class StepLineGraphPainter extends CustomPainter {
     final double xStep = size.width / 24;
     final double yStep = size.height / 4;
 
-    // Draw grid, ticks, step graph, and labels
+    /// Draw grid, ticks, step graph, and labels
     _drawGridLines(canvas, size, xStep, yStep, axisPaint);
     _drawTicks(canvas, size, xStep, yStep, tickPaint);
     _drawStepGraph(canvas, size, xStep, yStep, linePaint);
     _drawAxisLabels(canvas, size, xStep, yStep);
   }
 
-  // Draw grid lines
+  /// Draw grid lines
   void _drawGridLines(
     Canvas canvas,
     Size size,
@@ -165,7 +178,7 @@ class StepLineGraphPainter extends CustomPainter {
     }
   }
 
-  // Draw ticks
+  /// Draw ticks
   void _drawTicks(
     Canvas canvas,
     Size size,
@@ -205,7 +218,7 @@ class StepLineGraphPainter extends CustomPainter {
       }
     }
   }
-
+/// drawStepGraph is used to draw the graph line.
   void _drawStepGraph(
     Canvas canvas,
     Size size,
@@ -240,13 +253,14 @@ class StepLineGraphPainter extends CustomPainter {
     canvas.drawPath(path, linePaint);
   }
 
+  /// timeToX is used to convert time to x coordinate.
   double timeToX(String time, double width) {
     List<String> parts = time.split(':');
     double hours = double.parse(parts[0]) + (double.parse(parts[1]) / 60);
     return (hours / 24) * width; // Normalize to 24-hour scale
   }
 
-  // Draw axis labels
+  /// drawAxisLabels is used to draw the axis labels.
   void _drawAxisLabels(Canvas canvas, Size size, double xStep, double yStep) {
     final textStyle = labelTextStyle;
     final textPainter = TextPainter(
@@ -259,7 +273,7 @@ class StepLineGraphPainter extends CustomPainter {
     _drawRightSideLabels(canvas, yStep, textPainter, textStyle, size);
   }
 
-  // Draw X-axis labels
+  /// _drawXAxisLabels is used to draw the x axis labels.
   void _drawXAxisLabels(
     Canvas canvas,
     double xStep,
@@ -277,7 +291,7 @@ class StepLineGraphPainter extends CustomPainter {
     }
   }
 
-  // Draw Y-axis labels
+  /// drawYAxisLabels is used to draw the y axis labels.
   void _drawYAxisLabels(
     Canvas canvas,
     double yStep,
@@ -294,7 +308,7 @@ class StepLineGraphPainter extends CustomPainter {
     }
   }
 
-  // Draw right side labels
+  /// drawRightSideLabels is used to draw the right side labels.
   void _drawRightSideLabels(
     Canvas canvas,
     double yStep,
